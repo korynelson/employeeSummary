@@ -40,7 +40,7 @@ inquirer
 
 //create manager class employee
 function createManager(){
-    inquirer
+    inquirergi
         .prompt([
             {    type: "input",
             name: "name",
