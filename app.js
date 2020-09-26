@@ -23,7 +23,26 @@ inquirer
     }])
     .then(answers => {
         console.log(answers);
+        
     })
+
+//create manager class employee
+function createManager(){
+    inquirer
+        .prompt()
+}    
+
+//create engineer class employee
+function createEngineer(){
+    inquirer
+        .prompt()
+}   
+
+//create intern class employee
+function createIntern(){
+    inquirer
+        .prompt()
+}   
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
