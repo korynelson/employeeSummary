@@ -22,18 +22,18 @@ inquirer
         ]
     }])
     .then(answer => {
-        response = answer;
-        if (response = "manager"){
+        console.log(answer.employeeType)
+        
+        if (answer.employeeType === "Manager"){
             createManager();
         }
-        else if (response = "engineer"){
+        else if (answer.employeeType === "Engineer"){
             createEngineer();
         }
-        else if(response = "intern"){
+        else if(answer.employeeType === "Intern"){
             createIntern();
         }
-        else if (response = "no"){
-
+        else{
         }
 
     })
@@ -56,7 +56,7 @@ function createManager(){
             },
             {    type: "input",
             name: "officenum",
-            message: "What is the managers office number?"
+            message: "What is the manager's office number?"
             },
         ]).then(answers=>{
             console.log(answers);
@@ -67,13 +67,53 @@ function createManager(){
 //create engineer class employee
 function createEngineer(){
     inquirer
-        .prompt()
+    .prompt([
+        {    type: "input",
+        name: "name",
+        message: "What is the engineer's name?"
+        },
+        {    type: "input",
+        name: "id",
+        message: "What is the engineer's ID?"
+        },
+        {    type: "input",
+        name: "email",
+        message: "What is the engineer's email?"
+        },
+        {    type: "github",
+        name: "officenum",
+        message: "What is the engineer's Github username?"
+        },
+    ]).then(answers=>{
+        console.log(answers);
+    }
+    )
 }   
 
 //create intern class employee
 function createIntern(){
     inquirer
-        .prompt()
+    .prompt([
+        {    type: "input",
+        name: "name",
+        message: "What is the intern's name?"
+        },
+        {    type: "input",
+        name: "id",
+        message: "What is the intern's ID?"
+        },
+        {    type: "input",
+        name: "email",
+        message: "What is the intern's email?"
+        },
+        {    type: "input",
+        name: "school",
+        message: "What is the intern's school?"
+        },
+    ]).then(answers=>{
+        console.log(answers);
+    }
+    )
 }   
 
 // Write code to use inquirer to gather information about the development team members,
