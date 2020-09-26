@@ -60,6 +60,7 @@ function createManager(){
             },
         ]).then(answers=>{
             console.log(answers);
+            const newManager = new Manager(answers.name,answers.id,answers.email,answers.officenum);
         }
         )
 }    
@@ -80,12 +81,13 @@ function createEngineer(){
         name: "email",
         message: "What is the engineer's email?"
         },
-        {    type: "github",
-        name: "officenum",
+        {    type: "input",
+        name: "github",
         message: "What is the engineer's Github username?"
         },
     ]).then(answers=>{
         console.log(answers);
+        const newEngineer = new Engineer(answers.name,answers.id,answers.email,answers.github);
     }
     )
 }   
@@ -112,6 +114,9 @@ function createIntern(){
         },
     ]).then(answers=>{
         console.log(answers);
+
+        const newIntern = new Intern(answers.name,answers.id,answers.email,answers.school);
+        console.log(newIntern);
     }
     )
 }   
