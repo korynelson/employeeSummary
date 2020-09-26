@@ -21,15 +21,47 @@ inquirer
             "Intern"
         ]
     }])
-    .then(answers => {
-        console.log(answers);
-        
+    .then(answer => {
+        response = answer;
+        if (response = "manager"){
+            createManager();
+        }
+        else if (response = "engineer"){
+            createEngineer();
+        }
+        else if(response = "intern"){
+            createIntern();
+        }
+        else if (response = "no"){
+
+        }
+
     })
 
 //create manager class employee
 function createManager(){
     inquirer
-        .prompt()
+        .prompt([
+            {    type: "input",
+            name: "name",
+            message: "What is the manager's name?"
+            },
+            {    type: "input",
+            name: "id",
+            message: "What is the manager's ID?"
+            },
+            {    type: "input",
+            name: "email",
+            message: "What is the manager's email?"
+            },
+            {    type: "input",
+            name: "officenum",
+            message: "What is the managers office number?"
+            },
+        ]).then(answers=>{
+            console.log(answers);
+        }
+        )
 }    
 
 //create engineer class employee
