@@ -8,13 +8,15 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
 let employees = [];
 
 addPrompt();
+const render = require("./lib/htmlRenderer");
 
-//run the render function 
-render(employees);
+
+///////////////////////////////////////////////////////////////////////////
+/////////Define all funtions here/////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 //initial prompt
 function addPrompt(){
@@ -35,6 +37,36 @@ function addPrompt(){
             createEmployee();
         }
         else if (answer.addemployee === "No"){
+            console.log("Please add some employees") 
+            return;
+        }
+        else{
+        }
+    })
+}
+
+function addAnotherPrompt(){
+    inquirer
+    .prompt([{
+        type: "list",
+        name: "addanother",
+        message:"Would you like to add another employee?",
+        choices: [
+            "Yes",
+            "No"
+        ]
+    }])
+    .then(answer => {
+        console.log(answer.addanother)
+        
+        if (answer.addanother === "Yes"){
+            createEmployee();
+        }
+        else if (answer.addanother === "No"){
+            //run the render function
+            const html = render(employees);
+            console.log(html);
+            writeFiles(html);
             return;
         }
         else{
@@ -98,7 +130,7 @@ function createManager(){
             const newManager = new Manager(answers.name,answers.id,answers.email,answers.officenum);
             employees.push(newManager)
             console.log(employees)
-            addPrompt();
+            addAnotherPrompt();
         }
         )
 }    
@@ -128,7 +160,7 @@ function createEngineer(){
         const newEngineer = new Engineer(answers.name,answers.id,answers.email,answers.github);
         employees.push(newEngineer)
         console.log(employees)
-        addPrompt();
+        addAnotherPrompt();
     }
     )
 }   
@@ -160,10 +192,17 @@ function createIntern(){
         console.log(newIntern);
         employees.push(newIntern)
         console.log(employees)
-        addPrompt();        
+        addAnotherPrompt();        
     }
     )
 }   
+
+//create files
+function writeFiles(html){
+    fs.existsSync(OUTPUT_DIR);
+    fs.mkdirSync(OUTPUT_DIR);
+    fs.writeFileSync(outputPath,html);
+}
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
