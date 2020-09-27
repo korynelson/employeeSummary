@@ -199,9 +199,14 @@ function createIntern(){
 
 //create files
 function writeFiles(html){
-    fs.existsSync(OUTPUT_DIR);
-    fs.mkdirSync(OUTPUT_DIR);
-    fs.writeFileSync(outputPath,html);
+    if(fs.existsSync(OUTPUT_DIR)){
+        fs.writeFileSync(outputPath,html);
+    }
+    else {
+        fs.mkdirSync(OUTPUT_DIR);
+        fs.writeFileSync(outputPath,html);
+    }
+  
 }
 
 // Write code to use inquirer to gather information about the development team members,
