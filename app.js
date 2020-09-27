@@ -9,8 +9,37 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+let employees = [];
 
 inquirer
+    .prompt([{
+        type: "list",
+        name: "addemployee",
+        message:"Would you like to add an employee?",
+        choices: [
+            "Yes",
+            "No"
+        ]
+    }])
+    .then(answer => {
+        console.log(answer.addemployee)
+        
+        if (answer.addemployee === "Yes"){
+            createEmployee();
+        }
+        else if (answer.addemployee === "No"){
+            return;
+        }
+        else{
+        }
+    })
+
+//run the render function 
+render(employees);
+
+//create an employee
+function createEmployee(){
+    inquirer
     .prompt([{
         type: "list",
         name: "employeeType",
@@ -37,10 +66,11 @@ inquirer
         }
 
     })
+}
 
 //create manager class employee
 function createManager(){
-    inquirergi
+    inquirer
         .prompt([
             {    type: "input",
             name: "name",
@@ -61,6 +91,8 @@ function createManager(){
         ]).then(answers=>{
             console.log(answers);
             const newManager = new Manager(answers.name,answers.id,answers.email,answers.officenum);
+            employees.push(newManager)
+            console.log(employees)
         }
         )
 }    
@@ -88,6 +120,8 @@ function createEngineer(){
     ]).then(answers=>{
         console.log(answers);
         const newEngineer = new Engineer(answers.name,answers.id,answers.email,answers.github);
+        employees.push(newEngineer)
+        console.log(employees)
     }
     )
 }   
@@ -117,6 +151,9 @@ function createIntern(){
 
         const newIntern = new Intern(answers.name,answers.id,answers.email,answers.school);
         console.log(newIntern);
+        employees.push(newIntern)
+        console.log(employees)
+        
     }
     )
 }   
