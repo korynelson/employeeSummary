@@ -8,11 +8,12 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-let employees = [];
-
-addPrompt();
 const render = require("./lib/htmlRenderer");
 
+let employees = [];
+
+//Initialize firt prompt
+addPrompt();
 
 ///////////////////////////////////////////////////////////////////////////
 /////////Define all funtions here/////////////////////////////////////////
@@ -30,9 +31,7 @@ function addPrompt(){
             "No"
         ]
     }])
-    .then(answer => {
-        console.log(answer.addemployee)
-        
+    .then(answer => {        
         if (answer.addemployee === "Yes"){
             createManager();
         }
@@ -45,6 +44,7 @@ function addPrompt(){
     })
 }
 
+//prompt to see if user wants to add another employee
 function addAnotherPrompt(){
     inquirer
     .prompt([{
@@ -57,7 +57,6 @@ function addAnotherPrompt(){
         ]
     }])
     .then(answer => {
-        console.log(answer.addanother)
         
         if (answer.addanother === "Yes"){
             createEmployee();
@@ -65,7 +64,6 @@ function addAnotherPrompt(){
         else if (answer.addanother === "No"){
             //run the render function
             const html = render(employees);
-            console.log(html);
             writeFiles(html);
             return;
         }
@@ -74,7 +72,7 @@ function addAnotherPrompt(){
     })
 }
 
-//create an employee
+//Choose the type employee to be added
 function createEmployee(){
     inquirer
     .prompt([{
@@ -87,8 +85,7 @@ function createEmployee(){
         ]
     }])
     .then(answer => {
-        console.log(answer.employeeType)
-        
+
         if (answer.employeeType === "Engineer"){
             createEngineer();
         }
@@ -101,34 +98,31 @@ function createEmployee(){
     })
 };
 
-//create manager class employee
+//create manager of team
 function createManager(){
     inquirer
-        .prompt([
-            {    type: "input",
-            name: "name",
-            message: "What is the team manager's name?"
-            },
-            {    type: "input",
-            name: "id",
-            message: "What is the team manager's ID?"
-            },
-            {    type: "input",
-            name: "email",
-            message: "What is the team manager's email?"
-            },
-            {    type: "input",
-            name: "officenum",
-            message: "What is the team manager's office number?"
-            },
-        ]).then(answers=>{
-            console.log(answers);
-            const newManager = new Manager(answers.name,answers.id,answers.email,answers.officenum);
-            employees.push(newManager)
-            console.log(employees)
-            createEmployee();
-        }
-        )
+    .prompt([
+        {    type: "input",
+        name: "name",
+        message: "What is the team manager's name?"
+        },
+        {    type: "input",
+        name: "id",
+        message: "What is the team manager's ID?"
+        },
+        {    type: "input",
+        name: "email",
+        message: "What is the team manager's email?"
+        },
+        {    type: "input",
+        name: "officenum",
+        message: "What is the team manager's office number?"
+        },
+    ]).then(answers=>{
+        const newManager = new Manager(answers.name,answers.id,answers.email,answers.officenum);
+        employees.push(newManager)
+        createEmployee();
+    })
 }    
 
 //create engineer class employee
@@ -152,10 +146,8 @@ function createEngineer(){
         message: "What is the engineer's Github username?"
         },
     ]).then(answers=>{
-        console.log(answers);
         const newEngineer = new Engineer(answers.name,answers.id,answers.email,answers.github);
         employees.push(newEngineer)
-        console.log(employees)
         addAnotherPrompt();
     }
     )
@@ -182,12 +174,8 @@ function createIntern(){
         message: "What is the intern's school?"
         },
     ]).then(answers=>{
-        console.log(answers);
-
         const newIntern = new Intern(answers.name,answers.id,answers.email,answers.school);
-        console.log(newIntern);
         employees.push(newIntern)
-        console.log(employees)
         addAnotherPrompt();        
     }
     )
@@ -202,6 +190,5 @@ function writeFiles(html){
         fs.mkdirSync(OUTPUT_DIR);
         fs.writeFileSync(outputPath,html);
     }
-  
 }
 
