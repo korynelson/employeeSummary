@@ -11,7 +11,14 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 let employees = [];
 
-inquirer
+addPrompt();
+
+//run the render function 
+render(employees);
+
+//initial prompt
+function addPrompt(){
+    inquirer
     .prompt([{
         type: "list",
         name: "addemployee",
@@ -33,9 +40,7 @@ inquirer
         else{
         }
     })
-
-//run the render function 
-render(employees);
+}
 
 //create an employee
 function createEmployee(){
@@ -93,6 +98,7 @@ function createManager(){
             const newManager = new Manager(answers.name,answers.id,answers.email,answers.officenum);
             employees.push(newManager)
             console.log(employees)
+            addPrompt();
         }
         )
 }    
@@ -122,6 +128,7 @@ function createEngineer(){
         const newEngineer = new Engineer(answers.name,answers.id,answers.email,answers.github);
         employees.push(newEngineer)
         console.log(employees)
+        addPrompt();
     }
     )
 }   
@@ -153,7 +160,7 @@ function createIntern(){
         console.log(newIntern);
         employees.push(newIntern)
         console.log(employees)
-        
+        addPrompt();        
     }
     )
 }   
