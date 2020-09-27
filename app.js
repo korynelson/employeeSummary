@@ -24,7 +24,7 @@ function addPrompt(){
     .prompt([{
         type: "list",
         name: "addemployee",
-        message:"Would you like to add an employee?",
+        message:"Would you like to create a team?",
         choices: [
             "Yes",
             "No"
@@ -34,10 +34,10 @@ function addPrompt(){
         console.log(answer.addemployee)
         
         if (answer.addemployee === "Yes"){
-            createEmployee();
+            createManager();
         }
         else if (answer.addemployee === "No"){
-            console.log("Please add some employees") 
+            console.log("No team to create") 
             return;
         }
         else{
@@ -80,9 +80,8 @@ function createEmployee(){
     .prompt([{
         type: "list",
         name: "employeeType",
-        message:"Choose an employee to add",
+        message:"Choose an employee to add to the team",
         choices: [
-            "Manager",
             "Engineer",
             "Intern"
         ]
@@ -90,10 +89,7 @@ function createEmployee(){
     .then(answer => {
         console.log(answer.employeeType)
         
-        if (answer.employeeType === "Manager"){
-            createManager();
-        }
-        else if (answer.employeeType === "Engineer"){
+        if (answer.employeeType === "Engineer"){
             createEngineer();
         }
         else if(answer.employeeType === "Intern"){
@@ -103,7 +99,7 @@ function createEmployee(){
         }
 
     })
-}
+};
 
 //create manager class employee
 function createManager(){
@@ -111,26 +107,26 @@ function createManager(){
         .prompt([
             {    type: "input",
             name: "name",
-            message: "What is the manager's name?"
+            message: "What is the team manager's name?"
             },
             {    type: "input",
             name: "id",
-            message: "What is the manager's ID?"
+            message: "What is the team manager's ID?"
             },
             {    type: "input",
             name: "email",
-            message: "What is the manager's email?"
+            message: "What is the team manager's email?"
             },
             {    type: "input",
             name: "officenum",
-            message: "What is the manager's office number?"
+            message: "What is the team manager's office number?"
             },
         ]).then(answers=>{
             console.log(answers);
             const newManager = new Manager(answers.name,answers.id,answers.email,answers.officenum);
             employees.push(newManager)
             console.log(employees)
-            addAnotherPrompt();
+            createEmployee();
         }
         )
 }    
@@ -209,25 +205,3 @@ function writeFiles(html){
   
 }
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
